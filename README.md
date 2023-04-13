@@ -1,2 +1,2 @@
-# 2-part-cleanArchitecture-multiModule
-Contained: Separation of concerns, Recommended app architecture, MultiModule. Project: This project is simply a user authorization project",
+# 2-Part.MultiModule
+Separation of concerns, Recommended app architecture and MultiModule. This project is simply a user authorization project.
