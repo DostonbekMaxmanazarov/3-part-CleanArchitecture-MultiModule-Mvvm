@@ -2,7 +2,6 @@ package uz.uzapexsoft.cleanarchitecture.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Patterns
 import uz.uzapexsoft.cleanarchitecture.R
 
 class MainActivity : AppCompatActivity() {
