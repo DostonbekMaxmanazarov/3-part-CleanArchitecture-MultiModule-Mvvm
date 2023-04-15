@@ -1,6 +1,6 @@
 package uz.uzapexsoft.domain.usecase.impl
 
-import uz.uzapexsoft.domain.models.LoginParam
+import uz.uzapexsoft.domain.models.params.LoginParam
 import uz.uzapexsoft.domain.repository.AuthRepository
 import uz.uzapexsoft.domain.usecase.GetAuthUseCase
 

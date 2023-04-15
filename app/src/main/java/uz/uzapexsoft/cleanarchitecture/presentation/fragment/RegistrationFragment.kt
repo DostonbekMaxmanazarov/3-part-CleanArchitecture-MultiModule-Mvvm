@@ -10,9 +10,9 @@ import uz.uzapexsoft.cleanarchitecture.presentation.utils.extensions.replaceFrag
 import uz.uzapexsoft.data.mapper.impl.AuthenticationRequestMapToDomain
 import uz.uzapexsoft.data.mapper.impl.SaveAuthenticationParamMapToStorage
 import uz.uzapexsoft.data.repository.AuthRepositoryImpl
-import uz.uzapexsoft.data.storage.AuthStorageSharedPref
+import uz.uzapexsoft.data.storage.AuthStorage
 import uz.uzapexsoft.data.storage.impl.AuthStorageSharedPrefImpl
-import uz.uzapexsoft.domain.models.RegistrationParam
+import uz.uzapexsoft.domain.models.params.RegistrationParam
 import uz.uzapexsoft.domain.repository.AuthRepository
 import uz.uzapexsoft.domain.usecase.SaveAuthUseCase
 import uz.uzapexsoft.domain.usecase.impl.SaveAuthUseCaseImpl
@@ -22,7 +22,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
 
-    private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) {
+    private val authStorage: AuthStorage by lazy(LazyThreadSafetyMode.NONE) {
         AuthStorageSharedPrefImpl(context = requireContext())
     }
 

@@ -1,7 +1,7 @@
 package uz.uzapexsoft.data.storage.impl
 
 import android.content.Context
-import uz.uzapexsoft.data.storage.AuthStorageSharedPref
+import uz.uzapexsoft.data.storage.AuthStorage
 import uz.uzapexsoft.data.storage.models.AuthenticationRequest
 import uz.uzapexsoft.data.utils.ConstantsData.DEFAULT_EMAIL
 import uz.uzapexsoft.data.utils.ConstantsData.DEFAULT_PASSWORD
@@ -11,7 +11,7 @@ import uz.uzapexsoft.data.utils.ConstantsData.PASSWORD
 import uz.uzapexsoft.data.utils.ConstantsData.PHONE_NUMBER
 import uz.uzapexsoft.data.utils.ConstantsData.SHARED_PREFS_NAME
 
-class AuthStorageSharedPrefImpl(context: Context) : AuthStorageSharedPref {
+class AuthStorageSharedPrefImpl(context: Context) : AuthStorage {
     private val sharedPreference = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     override fun saveAuthentication(user: AuthenticationRequest): Boolean {

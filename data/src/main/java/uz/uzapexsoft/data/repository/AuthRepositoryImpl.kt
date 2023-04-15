@@ -4,10 +4,11 @@ import uz.uzapexsoft.data.mapper.SingleMapper
 import uz.uzapexsoft.data.storage.*
 import uz.uzapexsoft.data.storage.models.AuthenticationRequest
 import uz.uzapexsoft.domain.models.*
+import uz.uzapexsoft.domain.models.params.RegistrationParam
 import uz.uzapexsoft.domain.repository.AuthRepository
 
 class AuthRepositoryImpl(
-    private val authStorage: AuthStorageSharedPref,
+    private val authStorage: AuthStorage,
     private val saveAuthParamMapToStorage: SingleMapper<RegistrationParam, AuthenticationRequest>,
     private val authRequestMapToDomain: SingleMapper<AuthenticationRequest, Authentication>
 ) : AuthRepository {

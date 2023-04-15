@@ -9,9 +9,9 @@ import uz.uzapexsoft.cleanarchitecture.databinding.FragmentLoginBinding
 import uz.uzapexsoft.data.mapper.impl.AuthenticationRequestMapToDomain
 import uz.uzapexsoft.data.mapper.impl.SaveAuthenticationParamMapToStorage
 import uz.uzapexsoft.data.repository.AuthRepositoryImpl
-import uz.uzapexsoft.data.storage.AuthStorageSharedPref
+import uz.uzapexsoft.data.storage.AuthStorage
 import uz.uzapexsoft.data.storage.impl.AuthStorageSharedPrefImpl
-import uz.uzapexsoft.domain.models.LoginParam
+import uz.uzapexsoft.domain.models.params.LoginParam
 import uz.uzapexsoft.domain.repository.AuthRepository
 import uz.uzapexsoft.domain.usecase.GetAuthUseCase
 import uz.uzapexsoft.domain.usecase.impl.GetAuthUseCaseImpl
@@ -21,9 +21,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val authStorage: AuthStorageSharedPref by lazy(LazyThreadSafetyMode.NONE) { AuthStorageSharedPrefImpl(context = requireContext()) }
+    private val authStorage: AuthStorage by lazy(LazyThreadSafetyMode.NONE) {
+        AuthStorageSharedPrefImpl(context = requireContext())
+    }
+
     private val saveAuthParamMapToStorage = SaveAuthenticationParamMapToStorage()
     private val authRequestMapToDomain = AuthenticationRequestMapToDomain()
+
     private val authRepository: AuthRepository by lazy(LazyThreadSafetyMode.NONE) {
         AuthRepositoryImpl(
             authStorage = authStorage,
@@ -31,7 +35,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             authRequestMapToDomain = authRequestMapToDomain
         )
     }
-    private val getAuthUseCase: GetAuthUseCase by lazy(LazyThreadSafetyMode.NONE) { GetAuthUseCaseImpl(authRepository = authRepository) }
+    private val getAuthUseCase: GetAuthUseCase by lazy(LazyThreadSafetyMode.NONE) {
+        GetAuthUseCaseImpl(authRepository = authRepository)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentLoginBinding.bind(view)
@@ -52,6 +58,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             else Toast.makeText(requireContext(), R.string.failed, Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

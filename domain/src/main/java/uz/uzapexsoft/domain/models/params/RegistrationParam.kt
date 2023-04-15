@@ -1,4 +1,4 @@
-package uz.uzapexsoft.domain.models
+package uz.uzapexsoft.domain.models.params
 
 data class RegistrationParam(
     val email: String = "",

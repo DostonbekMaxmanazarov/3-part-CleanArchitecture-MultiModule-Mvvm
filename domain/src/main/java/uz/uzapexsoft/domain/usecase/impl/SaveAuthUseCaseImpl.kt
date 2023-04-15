@@ -1,6 +1,6 @@
 package uz.uzapexsoft.domain.usecase.impl
 
-import uz.uzapexsoft.domain.models.RegistrationParam
+import uz.uzapexsoft.domain.models.params.RegistrationParam
 import uz.uzapexsoft.domain.repository.AuthRepository
 import uz.uzapexsoft.domain.usecase.SaveAuthUseCase
 import uz.uzapexsoft.domain.utils.isValidationEmail
