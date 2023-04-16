@@ -4,61 +4,42 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import uz.uzapexsoft.cleanarchitecture.R
 import uz.uzapexsoft.cleanarchitecture.databinding.FragmentLoginBinding
-import uz.uzapexsoft.data.mapper.impl.AuthenticationRequestMapToDomain
-import uz.uzapexsoft.data.mapper.impl.SaveAuthenticationParamMapToStorage
-import uz.uzapexsoft.data.repository.AuthRepositoryImpl
-import uz.uzapexsoft.data.storage.AuthStorage
-import uz.uzapexsoft.data.storage.impl.AuthStorageSharedPrefImpl
-import uz.uzapexsoft.domain.models.params.LoginParam
-import uz.uzapexsoft.domain.repository.AuthRepository
-import uz.uzapexsoft.domain.usecase.GetAuthUseCase
-import uz.uzapexsoft.domain.usecase.impl.GetAuthUseCaseImpl
+import uz.uzapexsoft.cleanarchitecture.presentation.vm.LoginViewModel
+import uz.uzapexsoft.cleanarchitecture.presentation.vm.factory.LoginViewModelFactory
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val authStorage: AuthStorage by lazy(LazyThreadSafetyMode.NONE) {
-        AuthStorageSharedPrefImpl(context = requireContext())
-    }
-
-    private val saveAuthParamMapToStorage = SaveAuthenticationParamMapToStorage()
-    private val authRequestMapToDomain = AuthenticationRequestMapToDomain()
-
-    private val authRepository: AuthRepository by lazy(LazyThreadSafetyMode.NONE) {
-        AuthRepositoryImpl(
-            authStorage = authStorage,
-            saveAuthParamMapToStorage = saveAuthParamMapToStorage,
-            authRequestMapToDomain = authRequestMapToDomain
-        )
-    }
-    private val getAuthUseCase: GetAuthUseCase by lazy(LazyThreadSafetyMode.NONE) {
-        GetAuthUseCaseImpl(authRepository = authRepository)
-    }
+    private lateinit var vm: LoginViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentLoginBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+        vm = ViewModelProvider(this, LoginViewModelFactory(requireContext()))[LoginViewModel::class.java]
         initClickView()
+        observeData()
     }
 
     private fun initClickView() = binding.apply {
         btnLogin.setOnClickListener {
             val phoneNumber = etPhoneNumber.text.toString()
             val password = etPassword.text.toString()
-            val loginParam = LoginParam(
-                phoneNumber = phoneNumber,
-                password = password
-            )
-            val success = getAuthUseCase(param = loginParam)
+            vm.login(phoneNumber = phoneNumber, password = password)
+        }
+    }
+
+    private fun observeData() {
+        vm.resultLiveData.observe(viewLifecycleOwner) { success ->
+            binding.tvSuccess.text = success.toString()
             if (success) Toast.makeText(requireContext(), R.string.success, Toast.LENGTH_SHORT).show()
             else Toast.makeText(requireContext(), R.string.failed, Toast.LENGTH_SHORT).show()
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
