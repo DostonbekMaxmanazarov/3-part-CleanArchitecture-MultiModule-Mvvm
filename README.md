@@ -17,4 +17,27 @@ public class MyFragment extends Fragment {
 
 ViewModel odatda viewning ma'lumotlari va xatti-harakatlarini qamrab oluvchi class. Masalan, Android applicationda ViewModel appning ma'lum bir ekrani uchun ma'lumotlarni va logikani o'z ichiga olgan class sifatida ishlatilishi mumkin. ViewModel ma'lumotlarning qanday saqlanishi va boshqarilishini yashirish bilan birga, ma'lumotlarni ko'rsatish va ma'lumotlar bilan ishlashda ekran foydalanishi mumkin bo'lgan xususiyatlar va methodlarni ochib beradi.
 
-ViewModel-dan foydalanishning asosiy afzalliklaridan biri shundaki, u viewning va data layerning concernlarini ajratishga yordam beradi, bu kodni yanada modulli qilish va saqlashni osonlashtiradi.
+ViewModel-dan foydalanishning asosiy afzalliklaridan biri shundaki, u viewning va data layerning **```concernlarini```** ajratishga yordam beradi, bu kodni yanada modulli qilish va saqlashni osonlashtiradi.
+
+**```ViewModelProvider```** - bu Scope uchun ViewModellarni ta'minlovchi class hisoblanadi. Activity yoki Fragment uchun Default ViewModelProvider  uni konstruktorga uzatish orqali olinishi mumkin: ViewModelProvider(myFragment)
+1. ViewModelProvider-ni yaratish. Bu ViewModellar-ni yaratadi va ularni berilgan ViewModelStoreOwner storega saqlaydi. Agar owner HasDefaultViewModelProviderFactory-ni qo'llasa, bu method default factorydan foydalanadi. Aks holda, NewInstanceFactory ishlatiladi.
+
+```kotlin
+public constructor(
+    owner: ViewModelStoreOwner
+) : this(owner.viewModelStore, defaultFactory(owner), defaultCreationExtras(owner))
+```
+2. ViewModelProvider-ni yaratish, u berilgan factory orqali ViewModellarni yaratadi va ularni berilgan ViewModelStoreOwner storega saqlaydi.
+Params: owner - ViewModelStoreOwner uning ViewModelStore-dan ViewModellarni saqlash uchun foydalaniladi.
+factory - yangi ViewModellarni yaratish uchun foydalaniladigan factory.
+
+```kotlin
+public constructor(owner: ViewModelStoreOwner, factory: Factory) : this(
+    owner.viewModelStore,
+    factory,
+    defaultCreationExtras(owner)
+)
+```
+
+
+
